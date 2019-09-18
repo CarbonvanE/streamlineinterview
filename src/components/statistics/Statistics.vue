@@ -40,6 +40,5 @@ export default {
   display: flex;
   height: 100%;
   flex-wrap: wrap;
-  margin: 30px;
 }
 </style>

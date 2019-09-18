@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="container">
+    <div class="main-container container">
       <router-view />
     </div>
   </div>
@@ -17,5 +17,7 @@ export default {
 </script>
 
 <style>
-
+  .main-container {
+    padding-top: 30px;
+  }
 </style>
