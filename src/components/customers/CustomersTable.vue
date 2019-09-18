@@ -57,6 +57,7 @@
   @import "~bulma/sass/utilities/derived-variables";
 
   table {
+    width: 100%;
     margin: 10px 0;
 
     th, td {
