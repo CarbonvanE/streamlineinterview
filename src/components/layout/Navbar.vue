@@ -1,12 +1,14 @@
 <template>
-    <nav class="navbar is-primary">
+    <nav class="navbar is-danger">
         <div class="navbar-brand">
-            <a class="navbar-item" href="https://kiwaoesterbaai.com">
+            <router-link class="navbar-item" to="/">
                 <div class="hero">Customer database</div>
-            </a>
+            </router-link>
         </div>
         <div class="navbar-menu">
           <div class="navbar-end">
+            <router-link to="/customers" class="navbar-item">Overview</router-link>
+            <router-link to="/add" class="navbar-item">Add customer</router-link>
             <div class="datetime navbar-item">{{ datetime }}</div>
           </div>
         </div>
