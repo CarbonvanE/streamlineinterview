@@ -15,3 +15,7 @@ export async function fetchStatistics() {
     inactive: data.filter(item => item.isActive === false).length
   })
 }
+
+export async function fetchCustomers() {
+  return await fetchData('https://jsonbox.io/streamlineinterview32sfou10s0cls16ykm?sort=id&limit=500')
+}
