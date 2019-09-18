@@ -1,6 +1,6 @@
 <template>
     <div class="loader-wrapper">
-      <h3 v-if="!customers" class="title is-3">{{ text }}</h3>
+      <h3 class="title is-3">{{ text }}</h3>
     </div>
 </template>
 
