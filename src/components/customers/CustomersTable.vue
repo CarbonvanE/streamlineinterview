@@ -1,5 +1,5 @@
 <template>
-  <table class="table">
+  <table class="table is-hoverable">
     <thead>
       <tr>
         <th>ID</th>
@@ -9,6 +9,7 @@
         <th>Email</th>
         <th>Phone</th>
         <th>Address</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +23,14 @@
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
         <td>{{ customer.address }}</td>
+        <td class="update">
+          <router-link
+            class="button is-outlined"
+            :to="`/customers/${customer.id}`"
+            tag="button">
+              Update
+          </router-link>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -46,7 +55,7 @@
   @import "~bulma/sass/utilities/derived-variables";
 
   table {
-    margin: 30px 0;
+    margin: 10px 0;
 
     th, td {
       vertical-align: middle;
