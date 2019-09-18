@@ -9,8 +9,6 @@ import Statistics from '@/components/statistics/Statistics.vue'
 
 export default {
   name: 'home',
-  components: {
-    Statistics
-  }
+  components: { Statistics }
 }
 </script>
