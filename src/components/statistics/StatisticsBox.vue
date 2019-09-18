@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <p class="title is-2">{{ title }}</p>
-    <p class="subtitle is-3">{{ number }}</p>  </div>
+    <p class="subtitle is-3">{{ number === null ? "..." : number }}</p>  </div>
 </template>
 
 
@@ -10,7 +10,7 @@ export default {
   name: 'StatisticsBox',
   props: {
     title: {type: String, required: true},
-    number: {type: Number, required: true}
+    number: {value: [Number, null], required: true}
   }
 }
 </script>
