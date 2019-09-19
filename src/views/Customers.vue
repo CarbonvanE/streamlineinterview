@@ -26,6 +26,9 @@
     methods: {
       updateQuery(variable) {
         this.query = variable
+      },
+      normalizeField(value) {
+        return value.toString().toLowerCase()
       }
     },
 
@@ -33,11 +36,11 @@
       filteredCustomers: function() {
         if (!this.query) return this.customers
 
-        const text = this.query.toLowerCase()
+        const text = this.normalizeField(this.query)
         return this.customers.filter(customer => {
-          if (customer.name.toLowerCase().includes(text)) return true
-          if (customer.email.toLowerCase().includes(text)) return true
-          if (customer.address.toLowerCase().includes(text)) return true
+          if (this.normalizeField(customer.name).includes(text)) return true
+          if (this.normalizeField(customer.email).includes(text)) return true
+          if (this.normalizeField(customer.address).includes(text)) return true
           else return false
         })
       }
