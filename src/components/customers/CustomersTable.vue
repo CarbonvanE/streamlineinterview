@@ -24,12 +24,9 @@
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone }}</td>
           <td>{{ customer.address }}</td>
-          <td class="update">
-            <router-link
-              class="button is-outlined"
-              :to="`/customers/${customer.id}`"
-              tag="button">
-                Update
+          <td class="edit">
+            <router-link class="button is-outlined" :to="`/customers/${customer.id}`" tag="button">
+              Edit
             </router-link>
           </td>
         </tr>
