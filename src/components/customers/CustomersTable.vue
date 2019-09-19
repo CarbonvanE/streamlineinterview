@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="customer in customers" v-bind:key="customer._id">
+        <tr v-for="customer in customers" v-bind:key="customer._id" :class="{ 'is-inactive': !customer.isActive }">
           <th>{{ customer.id }}</th>
           <td class="active"><icon :name="customer.isActive ? 'check' : 'times'"></icon></td>
           <td class="customer-picture">
@@ -66,6 +66,10 @@
       svg, img {
         vertical-align: middle;
       }
+    }
+
+    tr.is-inactive {
+      opacity: 0.5;
     }
 
     .active, .customer-picture {
