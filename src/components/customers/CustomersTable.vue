@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="customer in customers" v-bind:key="customer.id">
+        <tr v-for="customer in customers" v-bind:key="customer._id">
           <th>{{ customer.id }}</th>
           <td class="active"><icon :name="customer.isActive ? 'check' : 'times'"></icon></td>
           <td class="customer-picture">
