@@ -1,30 +1,28 @@
 <template>
-  <div class="new-customer">
-    <div class="box">
-      <Message v-if="message" :type="messageType" :message="message" />
-      <FormTextField label="Prospective ID" :value.sync="prospectiveId" disabled />
-      <FormTextField label="Name" :value.sync="name" placeholder="Full name" />
-      <FormTextField label="Email" :value.sync="email" placeholder="Email" />
-      <FormTextField label="Address" :value.sync="address" placeholder="Address" />
-      <FormTextField label="Phone" :value.sync="phone" placeholder="Phone number" />
-      <FormTextField label="Picture" :value.sync="picture" placeholder="URl of picture" />
-      <FormCheckboxField label="Active user" :checked.sync="isActive" />
-
-      <Button fullWidth text="Submit" :loading="submitting" :onClick="submit" />
-    </div>
-  </div>
+  <BasicForm
+    :message="message"
+    :messageType="messageType"
+    :loading="submitting"
+    :onSubmit="submit">
+    <FormTextField label="Prospective ID" :value.sync="prospectiveId" disabled />
+    <FormTextField label="Name" :value.sync="name" placeholder="Full name" />
+    <FormTextField label="Email" :value.sync="email" placeholder="Email" />
+    <FormTextField label="Address" :value.sync="address" placeholder="Address" />
+    <FormTextField label="Phone" :value.sync="phone" placeholder="Phone number" />
+    <FormTextField label="Picture" :value.sync="picture" placeholder="URl of picture" />
+    <FormCheckboxField label="Active user" :checked.sync="isActive" />
+  </BasicForm>
 </template>
 
 <script>
-  import Message from '@/components/layout/Message.vue'
+  import BasicForm from '@/components/forms/BasicForm.vue'
   import FormTextField from '@/components/forms/FormTextField.vue'
   import FormCheckboxField from '@/components/forms/FormCheckboxField.vue'
-  import Button from '@/components/layout/Button.vue'
   import { fetchLastId, createCustomer } from '@/utils/api'
 
   export default {
     name: 'newCustomer',
-    components: { Message, FormTextField, FormCheckboxField, Button },
+    components: { BasicForm, FormTextField, FormCheckboxField },
 
     data () {
       return {
@@ -82,18 +80,3 @@
     }
   }
 </script>
-
-<style scoped lang="scss">
-  @import "~bulma/sass/utilities/initial-variables";
-  @import "~bulma/sass/utilities/derived-variables";
-
-  .new-customer {
-    display: flex;
-    justify-content: center;
-
-    .box {
-      width: 420px;
-      max-width: 100%;
-    }
-  }
-</style>
