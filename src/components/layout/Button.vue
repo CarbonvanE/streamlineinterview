@@ -5,6 +5,7 @@
       [`is-${type}`]: true,
       'is-loading': loading,
       'is-fullwidth': fullWidth,
+      'is-outlined': outlined
     }"
     v-on:click.prevent="onClick">
       {{ text }}
@@ -20,6 +21,7 @@
       type: {type: String, required: false, default: 'link'},
       loading: {type: Boolean, required: false},
       fullWidth: {type: Boolean, required: false},
+      outlined: {type: Boolean, required: false},
     }
   }
 </script>
