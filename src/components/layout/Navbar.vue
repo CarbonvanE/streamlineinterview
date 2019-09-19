@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar is-danger">
+    <nav class="navbar is-link">
         <div class="navbar-brand">
             <router-link class="navbar-item" to="/">
                 <div class="hero">Customer database</div>
