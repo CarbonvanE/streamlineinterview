@@ -1,109 +1,45 @@
 <template>
   <div class="new-customer">
     <div class="box">
-      <div class="field">
-        <label class="label">Prospective ID</label>
-        <div class="control">
-          <input class="input" disabled type="text" v-model="prospectiveId">
-        </div>
-      </div>
+      <Message v-if="message" :type="messageType" :message="message" />
+      <FormTextField label="Prospective ID" :value.sync="prospectiveId" disabled />
+      <FormTextField label="Name" :value.sync="name" placeholder="Full name" />
+      <FormTextField label="Email" :value.sync="email" placeholder="Email" />
+      <FormTextField label="Address" :value.sync="address" placeholder="Address" />
+      <FormTextField label="Phone" :value.sync="phone" placeholder="Phone number" />
+      <FormTextField label="Picture" :value.sync="picture" placeholder="URl of picture" />
+      <FormCheckboxField label="Active user" :checked.sync="isActive" />
 
-      <div class="field">
-        <label class="label">Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Full name" v-model="name">
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Email</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Email" v-model="email">
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Address</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Address" v-model="address">
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Phone</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Phone number" v-model="phone">
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Picture</label>
-        <div class="control">
-          <input class="input" type="text" value="" v-model="picture">
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input checked type="checkbox" v-model="isActive">
-            Active user
-          </label>
-        </div>
-      </div>
-
-      <div class="control">
-        <button
-          v-if="!success && !warning && !error"
-          class="button is-fullwidth is-link"
-          v-on:click.prevent="submit"
-          v-bind:class="{ 'is-loading': submitting}">
-            Submit
-        </button>
-        <button
-          v-if="!submitting && success"
-          class="button is-fullwidth is-success"
-          disabled>
-            Succesfully added the new customer! 🎉
-        </button>
-        <button
-          v-if="!submitting && warning"
-          class="button is-fullwidth is-warning"
-          v-on:click.prevent="submit">
-            Please enter (at least) a name and email address
-        </button>
-        <button
-          v-if="!submitting && error"
-          class="button is-fullwidth is-danger"
-          disabled>
-            Something went wrong 😔
-        </button>
-      </div>
+      <Button fullWidth text="Submit" :loading="submitting" :onClick="submit" />
     </div>
   </div>
 </template>
 
 <script>
+  import Message from '@/components/layout/Message.vue'
+  import FormTextField from '@/components/forms/FormTextField.vue'
+  import FormCheckboxField from '@/components/forms/FormCheckboxField.vue'
+  import Button from '@/components/layout/Button.vue'
   import { fetchLastId, createCustomer } from '@/utils/api'
 
   export default {
     name: 'newCustomer',
+    components: { Message, FormTextField, FormCheckboxField, Button },
 
     data () {
       return {
-        prospectiveId: null,
+        submitting: false,
+        message: '',
+        messageType: '',
+
+        // Form fields
+        prospectiveId: '',
         name: '',
         email: '',
         address: '',
         phone: '',
         picture: 'http://placehold.it/32x32',
         isActive: true,
-
-        // Form state
-        submitting: false,
-        warning: false,
-        success: false,
-        error: false
       }
     },
 
@@ -112,9 +48,8 @@
         // Require a name and email address
         if (this.name === '' || this.email === '') {
           this.submitting = false
-          this.success = false
-          this.warning = true
-          this.error = false
+          this.message = 'Please enter (at least) a name and email address'
+          this.messageType = 'warning'
           return
         }
 
@@ -132,14 +67,12 @@
         const status = await createCustomer(data)
         if (status === 200) {
           this.submitting = false
-          this.success = true
-          this.warning = false
-          this.error = false
+          this.message = `Succesfully added ${this.name} to the database!`
+          this.messageType = 'success'
         } else {
           this.submitting = false
-          this.success = false
-          this.warning = false
-          this.error = true
+          this.message = 'Sorry, something went wrong while adding the new user to the database'
+          this.messageType = 'danger'
         }
       }
     },
