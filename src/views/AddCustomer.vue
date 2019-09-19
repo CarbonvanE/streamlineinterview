@@ -10,7 +10,7 @@
     <FormTextField label="Address" :value.sync="address" placeholder="Address" />
     <FormTextField label="Phone" :value.sync="phone" placeholder="Phone number" />
     <FormTextField label="Picture" :value.sync="picture" placeholder="URl of picture" />
-    <FormCheckboxField label="Active user" :checked.sync="isActive" />
+    <FormCheckboxField label="Active customer" :checked.sync="isActive" />
   </BasicForm>
 </template>
 
@@ -62,7 +62,7 @@
           this.messageType = 'success'
         } else {
           this.submitting = false
-          this.message = 'Sorry, something went wrong while adding the new user to the database'
+          this.message = 'Sorry, something went wrong while adding the new customer to the database'
           this.messageType = 'danger'
         }
       }
