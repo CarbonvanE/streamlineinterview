@@ -1,8 +1,8 @@
 <template>
   <div class="boxes">
-    <StatisticsBox title="Total" :number="this.total" />
-    <StatisticsBox title="Active" :number="this.active" />
-    <StatisticsBox title="Inactive" :number="this.inactive"></StatisticsBox>
+    <StatisticsBox title="Total" :number="total" />
+    <StatisticsBox title="Active" :number="active" />
+    <StatisticsBox title="Inactive" :number="inactive"></StatisticsBox>
   </div>
 </template>
 

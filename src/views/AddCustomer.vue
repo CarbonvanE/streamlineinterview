@@ -43,29 +43,22 @@
 
     methods: {
       async submit() {
+        const { name, email, address, phone, picture, isActive } = this
+
         // Require a name and email address
-        if (this.name === '' || this.email === '') {
+        if (name === '' || email === '') {
           this.submitting = false
           this.message = 'Please enter (at least) a name and email address'
           this.messageType = 'warning'
           return
         }
 
-        const data = {
-          id: await fetchLastId() + 1,
-          name: this.name,
-          email: this.email,
-          address: this.address,
-          phone: this.phone,
-          picture: this.picture,
-          isActive: this.isActive
-        }
-
         this.submitting = true
+        const data = { id: await fetchLastId() + 1, name, email, address, phone, picture, isActive }
         const status = await createCustomer(data)
         if (status === 200) {
           this.submitting = false
-          this.message = `Succesfully added ${this.name} to the database!`
+          this.message = `Succesfully added ${name} to the database!`
           this.messageType = 'success'
         } else {
           this.submitting = false

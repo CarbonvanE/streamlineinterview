@@ -1,6 +1,6 @@
 <template>
   <div class="customers">
-    <SearchBar v-if="customers" :query="query" @updateQuery="updateQuery" :count="this.filteredCustomers.length" />
+    <SearchBar v-if="customers" :query="query" @updateQuery="updateQuery" :count="filteredCustomers.length" />
     <Loader v-if="!customers" text="Loading customers..." />
     <CustomersTable v-if="customers" :customers="filteredCustomers" />
   </div>
@@ -34,13 +34,14 @@
 
     computed: {
       filteredCustomers: function() {
-        if (!this.query) return this.customers
+        const { query, customers, normalizeField } = this
+        if (!query) return customers
 
-        const text = this.normalizeField(this.query)
-        return this.customers.filter(customer => {
-          if (this.normalizeField(customer.name).includes(text)) return true
-          if (this.normalizeField(customer.email).includes(text)) return true
-          if (this.normalizeField(customer.address).includes(text)) return true
+        const text = normalizeField(query)
+        return customers.filter(customer => {
+          if (normalizeField(customer.name).includes(text)) return true
+          if (normalizeField(customer.email).includes(text)) return true
+          if (normalizeField(customer.address).includes(text)) return true
           else return false
         })
       }
