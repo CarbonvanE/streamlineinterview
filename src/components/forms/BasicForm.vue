@@ -4,6 +4,7 @@
       <Message v-if="message" :type="messageType" :message="message" />
       <slot />
       <Button fullWidth :text="buttonText" :loading="loading" :onClick="onSubmit" />
+      <slot name="footer" />
     </div>
   </div>
 </template>
@@ -33,6 +34,10 @@
     .box {
       width: 420px;
       max-width: 100%;
+
+      .button {
+        margin-top: 12px;
+      }
     }
   }
 </style>
