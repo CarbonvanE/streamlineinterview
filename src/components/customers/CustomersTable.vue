@@ -1,49 +1,58 @@
 <template>
-  <div class="table-container">
-    <table class="table is-hoverable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Active</th>
-          <th><abbr title="Customer image">Img.</abbr></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Address</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="customer in customers" v-bind:key="customer._id" :class="{ 'is-inactive': !customer.isActive }">
-          <th>{{ customer.id }}</th>
-          <td class="active"><icon :name="customer.isActive ? 'check' : 'times'"></icon></td>
-          <td class="customer-picture">
-            <img :src="customer.picture" :alt="`Picture of ${customer.picture}`">
-          </td>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>{{ customer.address }}</td>
-          <td class="edit">
-            <router-link class="button is-outlined" :to="`/customers/${customer.id}`" tag="button">
-              Edit
-            </router-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <Table>
+    <thead >
+      <tr>
+        <SortableTableHeader name="ID" :sortBy="sortBy" :changeSortBy="changeSortBy" />
+        <TableHeader>Active</TableHeader>
+        <TableHeader>Img.</TableHeader>
+        <SortableTableHeader name="Name" :sortBy="sortBy" :changeSortBy="changeSortBy" />
+        <SortableTableHeader name="Email" :sortBy="sortBy" :changeSortBy="changeSortBy" />
+        <SortableTableHeader name="Phone" :sortBy="sortBy" :changeSortBy="changeSortBy" />
+        <SortableTableHeader name="Address" :sortBy="sortBy" :changeSortBy="changeSortBy" />
+        <TableHeader></TableHeader>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="customer in customers" :key="customer._id" :class="{ 'is-inactive': !customer.isActive }">
+        <TableData>{{ customer.id }}</TableData>
+        <TableData centered>
+          <icon :name="customer.isActive ? 'check' : 'times'" />
+        </TableData>
+        <TableData>
+          <img :src="customer.picture" :alt="`Picture of ${customer.picture}`">
+        </TableData>
+        <TableData>{{ customer.name }}</TableData>
+        <TableData>{{ customer.email }}</TableData>
+        <TableData>{{ customer.phone }}</TableData>
+        <TableData>{{ customer.address }}</TableData>
+        <TableData>
+          <router-link class="button is-outlined" :to="`/customers/${customer.id}`" tag="button">Edit</router-link>
+        </TableData>
+      </tr>
+    </tbody>
+  </Table>
 </template>
 
 
 <script>
+  import Table from '@/components/table/Table'
+  import TableHeader from '@/components/table/TableHeader'
+  import SortableTableHeader from '@/components/table/SortableTableHeader'
+  import TableData from '@/components/table/TableData'
   import Icon from 'vue-awesome/components/Icon'
 
   export default {
     name: 'CustomersTable',
-    components: { Icon },
+    components: { Table, TableHeader, SortableTableHeader, TableData, Icon },
     props: {
       customers: {type: Array, required: true},
+      sortBy: {type: String, required: true},
+    },
+    methods: {
+      changeSortBy(event) {
+        const target = event.target.innerText.replace(' ', '').toLowerCase()
+        this.$emit('update:sortBy', this.sortBy === target ? `-${this.sortBy}` : target)
+      }
     }
   }
 </script>
@@ -53,30 +62,15 @@
   @import "~bulma/sass/utilities/initial-variables";
   @import "~bulma/sass/utilities/derived-variables";
 
-  table {
-    width: 100%;
-    margin: 10px 0;
+  tr.is-inactive {
+    color: $grey-light;
+  }
 
-    th, td {
-      vertical-align: middle;
+  .button {
+    opacity: 0.8;
+  }
 
-      svg, img {
-        vertical-align: middle;
-      }
-    }
-
-    tr.is-inactive {
-      opacity: 0.5;
-    }
-
-    .active, .customer-picture {
-      text-align: center;
-    }
-
-    .customer-picture > img {
-      border-radius: $radius-large;
-      width: 32px;
-      height: 32px;
-    }
+  .button:hover {
+    opacity: 1;
   }
 </style>

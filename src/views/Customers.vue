@@ -2,7 +2,7 @@
   <div class="customers">
     <SearchBar v-if="customers" :query="query" @updateQuery="updateQuery" :count="filteredCustomers.length" />
     <Loader v-if="!customers" text="Loading customers..." />
-    <CustomersTable v-if="customers" :customers="filteredCustomers" />
+    <CustomersTable v-if="customers" :customers="sortedCustomers" :sortBy.sync="sortBy" />
   </div>
 </template>
 
@@ -11,6 +11,7 @@
   import SearchBar from '@/components/customers/SearchBar.vue'
   import Loader from '@/components/layout/Loader.vue'
   import { fetchCustomers } from '@/utils/api'
+  import { sortAscending, sortDescending } from '@/utils/sort'
 
   export default {
     name: 'customers',
@@ -19,31 +20,38 @@
     data () {
       return {
         customers: null,
-        query: ''
+        query: '',
+        sortBy: 'id'
       }
     },
 
     methods: {
       updateQuery(variable) {
         this.query = variable
-      },
-      normalizeField(value) {
-        return value.toString().toLowerCase()
       }
     },
 
     computed: {
       filteredCustomers: function() {
-        const { query, customers, normalizeField } = this
+        const { customers, query } = this
+        const normalizeField = value => value.toString().toLowerCase()
+
+        // If there is no search query, return the full list of customers
         if (!query) return customers
 
+        // Check if the query string can be found in the name, email, or address field
         const text = normalizeField(query)
         return customers.filter(customer => {
           if (normalizeField(customer.name).includes(text)) return true
           if (normalizeField(customer.email).includes(text)) return true
           if (normalizeField(customer.address).includes(text)) return true
-          else return false
         })
+      },
+      sortedCustomers: function() {
+        const { filteredCustomers: customers, sortBy } = this
+
+        if (!sortBy.startsWith('-')) return customers.sort((a, b) => sortAscending(a[sortBy], b[sortBy]))
+        return customers.sort((a, b) => sortDescending(a[sortBy.substring(1)], b[sortBy.substring(1)]))
       }
     },
 
