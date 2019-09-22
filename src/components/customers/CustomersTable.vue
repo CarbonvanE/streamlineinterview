@@ -26,7 +26,7 @@
         <TableData>{{ customer.phone }}</TableData>
         <TableData>{{ customer.address }}</TableData>
         <TableData>
-          <router-link class="button is-outlined" :to="`/customers/${customer.id}`" tag="button">Edit</router-link>
+          <router-link :to="`/customers/${customer.id}`"><icon scale="1.25" name="edit" /></router-link>
         </TableData>
       </tr>
     </tbody>
@@ -62,15 +62,16 @@
   @import "~bulma/sass/utilities/initial-variables";
   @import "~bulma/sass/utilities/derived-variables";
 
-  tr.is-inactive {
+  tr.is-inactive,
+  tr.is-inactive .fa-icon {
     color: $grey-light;
   }
 
-  .button {
-    opacity: 0.8;
+  .fa-icon {
+    color: $grey-light;
   }
 
-  .button:hover {
-    opacity: 1;
+  .fa-icon:hover {
+    color: $grey-dark;
   }
 </style>
