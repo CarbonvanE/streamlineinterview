@@ -1,6 +1,6 @@
 <template>
   <div class="customers">
-    <SearchBar v-if="customers" :query="query" @updateQuery="updateQuery" :count="filteredCustomers.length" />
+    <SearchBar v-if="customers" :query.sync="query" :count="filteredCustomers.length" />
     <Loader v-if="!customers" text="Loading customers..." />
     <CustomersTable v-if="customers" :customers="sortedCustomers" :sortBy.sync="sortBy" />
   </div>
@@ -24,13 +24,6 @@
         sortBy: 'id'
       }
     },
-
-    methods: {
-      updateQuery(variable) {
-        this.query = variable
-      }
-    },
-
     computed: {
       filteredCustomers: function() {
         const { customers, query } = this

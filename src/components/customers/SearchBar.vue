@@ -14,7 +14,7 @@
         type="text"
         placeholder="Find customer"
         v-bind:value="query"
-        v-on:input="updateQuery($event.target.value)"
+        v-on:input="$emit('update:query', $event.target.value)"
       >
     </div>
   </div>
@@ -30,11 +30,6 @@
     props: {
       query: {type: String, required: true},
       count: {type: Number, required: true}
-    },
-    methods: {
-      updateQuery: function (value) {
-        this.$emit('updateQuery', value);
-      }
     }
   }
 </script>
