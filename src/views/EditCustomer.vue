@@ -20,6 +20,7 @@
             fullWidth
             outlined
             text="Delete customer"
+            icon="trash-alt"
             type="danger"
             :loading="updatingCustomer"
             :onClick="deleteCustomer"

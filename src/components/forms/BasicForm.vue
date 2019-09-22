@@ -3,7 +3,7 @@
     <div class="box">
       <Message v-if="message" :type="messageType" :message="message" />
       <slot />
-      <Button fullWidth :text="buttonText" :loading="loading" :onClick="onSubmit" />
+      <Button fullWidth :text="buttonText" icon="save" :loading="loading" :onClick="onSubmit" />
       <slot name="footer" />
     </div>
   </div>
