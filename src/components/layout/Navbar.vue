@@ -53,5 +53,6 @@
 
   .datetime {
     opacity: 0.65;
+    width: 175px;
   }
 </style>
