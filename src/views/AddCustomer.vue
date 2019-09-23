@@ -55,8 +55,8 @@
 
         this.submitting = true
         const data = { id: await fetchLastId() + 1, name, email, address, phone, picture, isActive }
-        const status = await createCustomer(data)
-        if (status === 200) {
+        const success = await createCustomer(data)
+        if (success) {
           this.submitting = false
           this.message = `Succesfully added ${name} to the database!`
           this.messageType = 'success'

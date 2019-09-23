@@ -10,7 +10,6 @@
   import CustomersTable from '@/components/customers/CustomersTable.vue'
   import SearchBar from '@/components/customers/SearchBar.vue'
   import Loader from '@/components/layout/Loader.vue'
-  import { fetchCustomers } from '@/utils/api'
   import { sortAscending, sortDescending } from '@/utils/sort'
 
   export default {
@@ -49,8 +48,7 @@
     },
 
     async mounted () {
-      const customers = await fetchCustomers()
-      this.customers = customers
+      this.customers = await this.$store.getters.allCustomers
     }
   }
 </script>

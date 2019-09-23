@@ -9,7 +9,6 @@
 
 <script>
 import StatisticsBox from './StatisticsBox.vue'
-import { fetchStatistics } from '@/utils/api'
 
 export default {
   name: 'Statistics',
@@ -26,7 +25,7 @@ export default {
   },
 
   async mounted () {
-    const { total, active, inactive } = await fetchStatistics()
+    const { total, active, inactive } = await this.$store.getters.customerStatistics
     this.total = total
     this.active = active
     this.inactive = inactive

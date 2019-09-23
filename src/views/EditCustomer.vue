@@ -37,7 +37,7 @@
   import FormCheckboxField from '@/components/forms/FormCheckboxField.vue'
   import Button from '@/components/layout/Button.vue'
   import NotFound404 from '@/components/error/NotFound404.vue'
-  import { fetchCustomer, updateCustomer, deleteCustomer } from '@/utils/api'
+  import { updateCustomer, deleteCustomer } from '@/utils/api'
 
   export default {
     name: 'EditCustomer',
@@ -64,42 +64,35 @@
 
     methods: {
       async updateCustomer() {
-        const { databaseID, id, name, email, address, phone, picture, isActive } = this
+        const { databaseID, id, name, email, address, phone, picture, isActive, updateFetchingStatus } = this
 
         this.updatingCustomer = true
         const data = {id, name, email, address, phone, picture, isActive}
-        const status = await updateCustomer(databaseID, data)
-        if (status === 200) {
-          this.updatingCustomer = false
-          this.message = `Succesfully updated ${name}'s information`
-          this.messageType = 'success'
-        } else {
-          this.updatingCustomer = false
-          this.message = 'Sorry, something went wrong while updating the customer'
-          this.messageType = 'danger'
-        }
+        const success = await updateCustomer(databaseID, data)
+        if (success) updateFetchingStatus(true, `Succesfully updated ${name}'s information`)
+        else updateFetchingStatus(false, 'Sorry, something went wrong while updating the customer')
       },
       async deleteCustomer() {
+        const { databaseID, updateFetchingStatus } = this
+
         this.updatingCustomer = true
-        const status = await deleteCustomer(this.databaseID)
-        if (status === 200) {
-          this.updatingCustomer = false
-          this.message = `The customer has been deleted`
-          this.messageType = 'success'
-        } else {
-          this.updatingCustomer = false
-          this.message = 'Sorry, something went wrong while deleting the customer'
-          this.messageType = 'danger'
-        }
+        const success = await deleteCustomer(databaseID)
+        if (success) updateFetchingStatus(true, 'The customer has been deleted')
+        else updateFetchingStatus(false, 'Sorry, something went wrong while deleting the customer')
+      },
+      updateFetchingStatus(success, message) {
+        this.updatingCustomer = false
+        this.message = message
+        this.messageType = success ? 'success' : 'danger'
       }
     },
 
     async mounted() {
-      const result = await fetchCustomer(this.$route.params.id)
-      if (result === null) {
+      const customer = await this.$store.getters.customer(this.$route.params.id)
+      if (customer === null) {
         this.customerExists = false
       } else {
-        const { _id, id, name, email, address, phone, picture, isActive} = result
+        const { _id, id, name, email, address, phone, picture, isActive } = customer
         this.databaseID = _id
         this.id = id
         this.name = name
