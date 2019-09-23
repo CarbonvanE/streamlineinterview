@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicForm
-      v-if="customerExists && id"
+      v-if="customerExists && id !== ''"
       :message="message"
       :messageType="messageType"
       buttonText="Update customer"
