@@ -1,7 +1,7 @@
 <template>
   <div class="not-found-404">
     <icon name="exclamation-triangle" />
-    <h3 class="title is-3" v-if="!customerExists">
+    <h3 class="title is-3">
       Customer '{{ this.$route.params.id }}' doesn't exist
     </h3>
   </div>
